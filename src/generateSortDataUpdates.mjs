@@ -13,7 +13,7 @@ import isValidObjectId from './isValidObjectId.mjs';
  * @returns {Array<Object>}
  */
 export default (arr, input) => {
-  const len = input.length;
+  const len = arr.length;
   if (len !== input.length) {
     throw createError(400);
   }
