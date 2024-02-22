@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "lint": "tsc",
-    "test": "ava"
+    "test": "node --test"
   },
   "main": "./src/index.mjs",
   "exports": {
@@ -22,7 +22,6 @@
     "@babel/plugin-proposal-optional-chaining": "^7.21.0",
     "@babel/plugin-syntax-import-attributes": "^7.23.3",
     "@types/node": "^20.10.5",
-    "ava": "^6.0.1",
     "eslint": "^8.56.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-plugin-import": "^2.29.1",
@@ -32,7 +31,7 @@
     "typescript": "^5.3.3"
   },
   "engines": {
-    "node": ">= 14.18.0"
+    "node": ">= 20.0.0"
   },
   "dependencies": {
     "http-errors": "^2.0.0",

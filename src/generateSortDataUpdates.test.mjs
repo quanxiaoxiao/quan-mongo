@@ -1,20 +1,21 @@
-import test from 'ava'; // eslint-disable-line
+import test from 'node:test'; // eslint-disable-line
+import assert from 'node:assert';
 import mongoose from 'mongoose';
-import generateSortDataUpdates from '../src/generateSortDataUpdates.mjs';
+import generateSortDataUpdates from './generateSortDataUpdates.mjs';
 
 const getId = () => (new mongoose.Types.ObjectId()).toString();
 
-test('1', (t) => {
-  t.deepEqual(generateSortDataUpdates([], []), []);
-  t.throws(() => {
-    t.deepEqual(generateSortDataUpdates([], [getId()]), []);
+test('generateSortDataUpdates', () => {
+  assert.deepEqual(generateSortDataUpdates([], []), []);
+  assert.throws(() => {
+    assert.deepEqual(generateSortDataUpdates([], [getId()]), []);
   });
-  t.throws(() => {
-    t.deepEqual(generateSortDataUpdates(['123'], ['123']), []);
+  assert.throws(() => {
+    assert.deepEqual(generateSortDataUpdates(['123'], ['123']), []);
   });
   const _ids = [getId(), getId(), getId()];
   const len = _ids.length;
-  t.deepEqual(
+  assert.deepEqual(
     generateSortDataUpdates(_ids.map((_id) => ({
       _id,
     })), _ids),
@@ -35,29 +36,29 @@ test('1', (t) => {
     })),
   );
 
-  t.throws(() => {
+  assert.throws(() => {
     generateSortDataUpdates(_ids.map((_id) => ({
       _id,
     })), _ids.slice(1));
   });
-  t.throws(() => {
+  assert.throws(() => {
     generateSortDataUpdates(_ids.map((_id) => ({
       _id,
     })).slice(1), _ids);
   });
-  t.throws(() => {
+  assert.throws(() => {
     const __ids = _ids.map((_id, i) => (i === 1 ? `${_id}1` : _id));
     generateSortDataUpdates(__ids.map((_id) => ({
       _id,
     })), __ids);
   });
-  t.throws(() => {
+  assert.throws(() => {
     const __ids = _ids.map((_id, i) => (i === 1 ? `${_id.slice(12)}${_id.slice(0, 12)}` : _id));
     generateSortDataUpdates(__ids.map((_id) => ({
       _id,
     })), _ids);
   });
-  t.throws(() => {
+  assert.throws(() => {
     const __ids = _ids.map((_id, i) => (i === 1 ? `${_id.slice(12)}${_id.slice(0, 12)}` : _id));
     generateSortDataUpdates(_ids.map((_id) => ({
       _id,
