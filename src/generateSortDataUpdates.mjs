@@ -1,6 +1,6 @@
 // @ts-expect-error
 import createError from 'http-errors';
-import isValidObjectId from './isValidObjectId.mjs';
+import isValidUniqueObjectIds from './isValidUniqueObjectIds.mjs';
 
 /**
  * @typedef {Object} Item
@@ -13,6 +13,9 @@ import isValidObjectId from './isValidObjectId.mjs';
  * @returns {Array<Object>}
  */
 export default (arr, input) => {
+  if (!isValidUniqueObjectIds(input)) {
+    throw createError(400);
+  }
   const len = arr.length;
   if (len !== input.length) {
     throw createError(400);
@@ -20,9 +23,6 @@ export default (arr, input) => {
   const updates = [];
   for (let i = 0; i < len; i++) {
     const target = input[i];
-    if (!isValidObjectId(target)) {
-      throw createError(400);
-    }
     if (!arr.some((d) => d._id.toString() === target)) {
       throw createError(400);
     }
