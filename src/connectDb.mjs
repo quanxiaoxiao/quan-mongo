@@ -25,12 +25,15 @@ export default async ({
 }) => {
   let uri;
 
+  const options = {};
+
   if (!database || database.trim() === '') {
     console.error('mongo database is not set');
     process.exit(1);
   }
 
   if (username && password) {
+    options.authSource = 'admin';
     uri = `mongodb://${username}:${password}@${hostname}:${port}/${database}`;
   } else {
     uri = `mongodb://${hostname}:${port}/${database}`;
@@ -41,7 +44,7 @@ export default async ({
 
   mongoose.set('strictQuery', false);
 
-  await mongoose.connect(uri);
+  await mongoose.connect(uri, options);
 
   if (onConnect) {
     await onConnect(uri);
