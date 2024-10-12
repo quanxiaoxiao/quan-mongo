@@ -1,12 +1,4 @@
-/**
- * @param {Object<String, *>} args
- * @param {string} dateTimeKey
- * @returns {Object<String, *>}
- */
 export default (args = {}, dateTimeKey = 'timeCreate') => {
-  /**
-   * @type {Object<String, *>}
-   */
   const query = {};
   const dateTimeStartKey = `${dateTimeKey}Start`;
   const dateTimeEndKey = `${dateTimeKey}End`;

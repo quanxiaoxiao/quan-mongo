@@ -1,17 +1,7 @@
-// @ts-expect-error
 import createError from 'http-errors';
 import isValidUniqueObjectIds from './isValidUniqueObjectIds.mjs';
+import areDbIdsEqual from './areDbIdsEqual.mjs';
 
-/**
- * @typedef {Object} Item
- * @property {Object|string} _id
- */
-
-/**
- * @param {Array<Item>} arr
- * @param {Array<string>} input
- * @returns {Array<Object>}
- */
 export default (arr, input) => {
   if (!isValidUniqueObjectIds(input)) {
     throw createError(400);
@@ -23,7 +13,7 @@ export default (arr, input) => {
   const updates = [];
   for (let i = 0; i < len; i++) {
     const target = input[i];
-    if (!arr.some((d) => d._id.toString() === target)) {
+    if (!arr.some((d) => areDbIdsEqual(d._id, target))) {
       throw createError(400);
     }
     updates.push({

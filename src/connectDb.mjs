@@ -1,19 +1,5 @@
 import mongoose from 'mongoose';
 
-/**
- * @typedef {Object} MongoOptions
- * @property {string} database
- * @property {string} [hostname='127.0.0.1']
- * @property {number} [port=27017]
- * @property {string} [username='']
- * @property {string} [password='']
- * @property {Function} [onRequest]
- * @property {Function} [onConnect]
- */
-
-/**
- * @param {MongoOptions} options
- */
 export default async ({
   database,
   hostname = '127.0.0.1',
@@ -28,7 +14,7 @@ export default async ({
   const options = {};
 
   if (!database || database.trim() === '') {
-    console.error('mongo database is not set');
+    console.error('mongo database unset');
     process.exit(1);
   }
 

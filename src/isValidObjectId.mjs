@@ -1,7 +1,3 @@
-/**
- * @param {string|null|Object} str
- * @returns {boolean}
- */
 export default (str) => {
   if (str == null) {
     return false;

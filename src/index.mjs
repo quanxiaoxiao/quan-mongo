@@ -3,6 +3,7 @@ import isValidObjectId from './isValidObjectId.mjs';
 import getQuery from './getQuery.mjs';
 import generateSortDataUpdates from './generateSortDataUpdates.mjs';
 import isValidUniqueObjectIds from './isValidUniqueObjectIds.mjs';
+import areDbIdsEqual from './areDbIdsEqual.mjs';
 
 export {
   connectDb,
@@ -10,4 +11,5 @@ export {
   generateSortDataUpdates,
   isValidObjectId,
   isValidUniqueObjectIds,
+  areDbIdsEqual,
 };
