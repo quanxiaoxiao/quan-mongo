@@ -2,28 +2,24 @@ export default (args = {}, dateTimeKey = 'timeCreate') => {
   const query = {};
   const dateTimeStartKey = `${dateTimeKey}Start`;
   const dateTimeEndKey = `${dateTimeKey}End`;
-  if (args[dateTimeStartKey] != null) {
-    query[dateTimeKey] = {
-      $gte: args[dateTimeStartKey],
-    };
-  }
-  if (args[dateTimeEndKey] != null) {
-    query[dateTimeKey] = {
-      ...(query[dateTimeKey] || {}),
-      $lte: args[dateTimeEndKey],
-    };
-  }
-  return Object.keys(args).reduce((acc, dataKey) => {
-    if ([dateTimeStartKey, dateTimeEndKey].includes(dataKey)) {
-      return acc;
+  const dateTimeStart = args[dateTimeStartKey];
+  const dateTimeEnd = args[dateTimeEndKey];
+  if (dateTimeStart != null || dateTimeEnd != null) {
+    query[dateTimeKey] = {};
+    if (dateTimeStart != null) {
+      query[dateTimeKey].$gte = dateTimeStart;
     }
-    const v = args[dataKey];
-    if (v == null) {
-      return acc;
+    if (dateTimeEnd != null) {
+      query[dateTimeKey].$lte = dateTimeEnd;
     }
-    return {
-      ...acc,
-      [dataKey]: v,
-    };
-  }, query);
+  }
+  const excludeKeys = new Set([dateTimeStartKey, dateTimeEndKey]);
+
+  Object.entries(args).forEach(([key, value]) => {
+    if (!excludeKeys.has(key) && value != null) {
+      query[key] = value;
+    }
+  });
+
+  return query;
 };
