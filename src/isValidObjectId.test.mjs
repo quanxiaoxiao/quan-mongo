@@ -1,6 +1,8 @@
-import test from 'node:test';
 import assert from 'node:assert';
+import test from 'node:test';
+
 import mongoose from 'mongoose';
+
 import isValidObjectId from './isValidObjectId.mjs';
 
 test('isValidObjectId', () => {

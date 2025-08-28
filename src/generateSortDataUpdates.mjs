@@ -1,6 +1,7 @@
 import createError from 'http-errors';
-import isValidUniqueObjectIds from './isValidUniqueObjectIds.mjs';
+
 import areDbIdsEqual from './areDbIdsEqual.mjs';
+import isValidUniqueObjectIds from './isValidUniqueObjectIds.mjs';
 
 export default (arr, input) => {
   if (!isValidUniqueObjectIds(input)) {
