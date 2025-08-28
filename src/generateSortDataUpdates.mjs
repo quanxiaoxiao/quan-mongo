@@ -11,27 +11,32 @@ export default (arr, input) => {
   if (len !== input.length) {
     throw createError(400);
   }
-  const updates = [];
-  for (let i = 0; i < len; i++) {
-    const target = input[i];
-    if (!arr.some((d) => areDbIdsEqual(d._id, target))) {
-      throw createError(400);
-    }
-    updates.push({
-      updateOne: {
-        filter: {
-          _id: target,
-          invalid: {
-            $ne: true,
-          },
-        },
-        update: {
-          $set: {
-            order: len - i,
-          },
+  const arrIdSet = new Set(arr.map(item => item._id?.toString()));
+
+  const invalidIds = input.filter((targetId) => {
+    const targetIdStr = targetId?.toString();
+    return !Array.from(arrIdSet).some((arrId) =>
+      areDbIdsEqual(arrId, targetIdStr),
+    );
+  });
+
+  if (invalidIds.length > 0) {
+    throw createError(400, `IDs not found in original array: ${invalidIds.join(', ')}`);
+  }
+
+  const updates = input.map((targetId, index) => ({
+    updateOne: {
+      filter: {
+        _id: targetId,
+        invalid: { $ne: true },
+      },
+      update: {
+        $set: {
+          order: arr.length - index,
         },
       },
-    });
-  }
+    },
+  }));
+
   return updates;
 };
